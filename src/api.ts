@@ -6,6 +6,7 @@ type EnvVariables = Array<{
 }>
 
 type EndpointId = number
+type RegistryId = number
 
 type StackData = {
   Id: number
@@ -14,7 +15,7 @@ type StackData = {
   Env: EnvVariables
 }
 
-type CreateStackParams = { type: number; method: string; endpointId: EndpointId }
+type CreateStackParams = { type: number; method: string; endpointId: EndpointId; RegistryId: RegistryId }
 type CreateStackBody = { name: string; stackFileContent: string; swarmID?: string }
 type UpdateStackParams = { endpointId: EndpointId }
 type UpdateStackBody = { env: EnvVariables; stackFileContent: string }
