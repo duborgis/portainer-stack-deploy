@@ -20,6 +20,7 @@ Portainer-stack-deploy is a GitHub Action for deploying a newly updated stack to
 | stack-definition   | The path to the docker-compose stack stack definition file from repo root, eg. `stack-definition.yml`                                                                        | **Required** |
 | template-variables | If given, these variables will be replaced in docker-compose file by handlebars                                                                                              |              |
 | image              | The URI of the container image to insert into the stack definition, eg. `ghcr.io/username/repo:sha-676cae2`. Will use existing image inside stack definition if not provided |              |
+| registry-auth      | The registry authentication header value, eg. `x-registry-auth`                                                                                                              |              |
 
 ## Example
 

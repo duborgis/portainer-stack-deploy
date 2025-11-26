@@ -35,5 +35,5 @@ inputs:
     description: 'The registry authentication header value, eg. x-registry-auth'
 
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
