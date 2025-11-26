@@ -90,7 +90,8 @@ export async function deployStack({
         {
           type: swarmId ? StackType.SWARM : StackType.COMPOSE,
           method: 'string',
-          endpointId
+          endpointId,
+          1
         },
         {
           name: stackName,
