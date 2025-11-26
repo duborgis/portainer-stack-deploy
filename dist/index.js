@@ -111,7 +111,7 @@ function generateNewStackDefinition(stackDefinitionFile, templateVariables, imag
     core.info(`Inserting image ${image} into the stack definition`);
     return stackDefinition.replace(new RegExp(`${imageWithoutTag}(:.*)?\n`), `${image}\n`);
 }
-async function deployStack({ portainerHost, accessToken, swarmId, endpointId, stackName, stackDefinitionFile, templateVariables, image, registryAuth, pruneStack, pullImage }) {
+async function deployStack({ portainerHost, accessToken, swarmId, endpointId, stackName, stackDefinitionFile, templateVariables, image, registryAuth }) {
     const portainerApi = new api_1.PortainerApi(portainerHost, accessToken, registryAuth);
     const stackDefinitionToDeploy = generateNewStackDefinition(stackDefinitionFile, templateVariables, image);
     core.debug(stackDefinitionToDeploy);
@@ -125,9 +125,7 @@ async function deployStack({ portainerHost, accessToken, swarmId, endpointId, st
                 endpointId: existingStack.EndpointId
             }, {
                 env: existingStack.Env,
-                stackFileContent: stackDefinitionToDeploy,
-                prune: pruneStack,
-                pullImage: pullImage
+                stackFileContent: stackDefinitionToDeploy
             });
             core.info('Successfully updated existing stack');
         }
@@ -229,12 +227,6 @@ async function run() {
         const registryAuth = core.getInput('registry-auth', {
             required: false
         });
-        const pruneStack = core.getBooleanInput('prune-stack', {
-            required: false
-        });
-        const pullImage = core.getBooleanInput('pull-image', {
-            required: false
-        });
         await (0, deployStack_1.deployStack)({
             portainerHost,
             accessToken,
@@ -244,9 +236,7 @@ async function run() {
             stackDefinitionFile,
             templateVariables: templateVariables ? JSON.parse(templateVariables) : undefined,
             image,
-            registryAuth,
-            pruneStack,
-            pullImage
+            registryAuth
         });
         core.info('✅ Deployment done');
     }
