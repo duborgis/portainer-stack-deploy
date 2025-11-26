@@ -28,6 +28,9 @@ export async function run(): Promise<void> {
     const image: string = core.getInput('image', {
       required: false
     })
+    const registryAuth: string = core.getInput('registry-auth', {
+      required: false
+    })
 
     await deployStack({
       portainerHost,
@@ -37,7 +40,8 @@ export async function run(): Promise<void> {
       stackName,
       stackDefinitionFile,
       templateVariables: templateVariables ? JSON.parse(templateVariables) : undefined,
-      image
+      image,
+      registryAuth
     })
     core.info('✅ Deployment done')
   } catch (error) {

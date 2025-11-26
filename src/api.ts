@@ -6,7 +6,6 @@ type EnvVariables = Array<{
 }>
 
 type EndpointId = number
-type RegistryId = number
 
 type StackData = {
   Id: number
@@ -15,7 +14,7 @@ type StackData = {
   Env: EnvVariables
 }
 
-type CreateStackParams = { type: number; method: string; endpointId: EndpointId; RegistryId: RegistryId }
+type CreateStackParams = { type: number; method: string; endpointId: EndpointId}
 type CreateStackBody = { name: string; stackFileContent: string; swarmID?: string }
 type UpdateStackParams = { endpointId: EndpointId }
 type UpdateStackBody = { env: EnvVariables; stackFileContent: string }
@@ -23,11 +22,14 @@ type UpdateStackBody = { env: EnvVariables; stackFileContent: string }
 export class PortainerApi {
   private axiosInstance
 
-  constructor(host: string, accessToken: string) {
+  constructor(host: string, accessToken: string, registryAuth?: string) {
     this.axiosInstance = axios.create({
       baseURL: `${host}/api`
     })
     this.axiosInstance.defaults.headers.common['x-api-key'] = accessToken
+    if (registryAuth) {
+      this.axiosInstance.defaults.headers.common['x-registry-auth'] = registryAuth
+    }
   }
 
   async getStacks(): Promise<StackData[]> {

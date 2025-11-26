@@ -13,6 +13,7 @@ type DeployStack = {
   stackDefinitionFile: string
   templateVariables?: object
   image?: string
+  registryAuth?: string
 }
 
 enum StackType {
@@ -55,9 +56,10 @@ export async function deployStack({
   stackName,
   stackDefinitionFile,
   templateVariables,
-  image
+  image,
+  registryAuth
 }: DeployStack): Promise<void> {
-  const portainerApi = new PortainerApi(portainerHost, accessToken)
+  const portainerApi = new PortainerApi(portainerHost, accessToken, registryAuth)
 
   const stackDefinitionToDeploy = generateNewStackDefinition(
     stackDefinitionFile,
@@ -91,7 +93,6 @@ export async function deployStack({
           type: swarmId ? StackType.SWARM : StackType.COMPOSE,
           method: 'string',
           endpointId,
-          1
         },
         {
           name: stackName,
