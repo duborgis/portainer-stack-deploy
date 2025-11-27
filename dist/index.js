@@ -19,7 +19,7 @@ class PortainerApi {
         });
         this.axiosInstance.defaults.headers.common['x-api-key'] = accessToken;
         if (registryAuth) {
-            this.axiosInstance.defaults.headers.common['x-registry-auth'] = registryAuth;
+            this.axiosInstance.defaults.headers.common['X-Registry-Auth'] = registryAuth;
         }
     }
     async getStacks() {
@@ -87,11 +87,6 @@ const path_1 = __importDefault(__nccwpck_require__(6928));
 const fs_1 = __importDefault(__nccwpck_require__(9896));
 const handlebars_1 = __importDefault(__nccwpck_require__(8508));
 const core = __importStar(__nccwpck_require__(7484));
-var StackType;
-(function (StackType) {
-    StackType[StackType["SWARM"] = 1] = "SWARM";
-    StackType[StackType["COMPOSE"] = 2] = "COMPOSE";
-})(StackType || (StackType = {}));
 function generateNewStackDefinition(stackDefinitionFile, templateVariables, image) {
     const stackDefFilePath = path_1.default.join(process.env.GITHUB_WORKSPACE, stackDefinitionFile);
     core.info(`Reading stack definition file from ${stackDefFilePath}`);
@@ -132,8 +127,6 @@ async function deployStack({ portainerHost, accessToken, swarmId, endpointId, st
         else {
             core.info('Deploying new stack...');
             await portainerApi.createStack({
-                type: swarmId ? StackType.SWARM : StackType.COMPOSE,
-                method: 'string',
                 endpointId,
             }, {
                 name: stackName,
