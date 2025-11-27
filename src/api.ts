@@ -14,7 +14,7 @@ type StackData = {
   Env: EnvVariables
 }
 
-type CreateStackParams = { type: number; method: string; endpointId: EndpointId}
+type CreateStackParams = { endpointId: EndpointId}
 type CreateStackBody = { name: string; stackFileContent: string; swarmID?: string }
 type UpdateStackParams = { endpointId: EndpointId }
 type UpdateStackBody = { env: EnvVariables; stackFileContent: string }
@@ -28,7 +28,7 @@ export class PortainerApi {
     })
     this.axiosInstance.defaults.headers.common['x-api-key'] = accessToken
     if (registryAuth) {
-      this.axiosInstance.defaults.headers.common['x-registry-auth'] = registryAuth
+      this.axiosInstance.defaults.headers.common['X-Registry-Auth'] = registryAuth
     }
   }
 

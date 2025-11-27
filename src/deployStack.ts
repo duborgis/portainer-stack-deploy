@@ -16,10 +16,6 @@ type DeployStack = {
   registryAuth?: string
 }
 
-enum StackType {
-  SWARM = 1,
-  COMPOSE = 2
-}
 
 function generateNewStackDefinition(
   stackDefinitionFile: string,
@@ -90,8 +86,6 @@ export async function deployStack({
       core.info('Deploying new stack...')
       await portainerApi.createStack(
         {
-          type: swarmId ? StackType.SWARM : StackType.COMPOSE,
-          method: 'string',
           endpointId,
         },
         {
